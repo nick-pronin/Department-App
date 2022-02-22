@@ -1,0 +1,171 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Employee {
+  id: Int!
+  name: String
+  surname: String
+  email: String!
+  age: Int
+  photoURI: String
+  position: Position!
+}
+
+type Position {
+  id: Int!
+  title: String
+  description: String
+  department: Department!
+  employees: [Employee!]!
+}
+
+type Department {
+  id: Int!
+  title: String!
+  description: String
+  positions: [Position!]!
+
+  """Quantity of employees in department"""
+  employeesQuantity: Int
+
+  """Employees in department"""
+  employees: [Employee!]
+}
+
+type DepartmentBase {
+  id: Int!
+  title: String!
+  description: String
+}
+
+type DepartmentRemove {
+  """Quantity of positions removed"""
+  removedPositions: Int!
+
+  """Quantity of departments removed"""
+  removedDepartments: Int!
+}
+
+type EmployeeBase {
+  id: Int!
+  name: String
+  surname: String
+  email: String!
+  age: Int
+  photoURI: String
+}
+
+type PositionBase {
+  id: Int!
+  title: String
+  description: String
+}
+
+type Query {
+  departments: [Department!]!
+  department(id: Int!): Department!
+  employees: [Employee!]!
+  employeesFromDepartment(id: Int!): [Employee!]!
+  employee(id: Int!): Employee!
+  positions: [Position!]!
+  position(id: Int!): Position!
+}
+
+type Mutation {
+  createDepartment(input: CreateDepartmentInput!): DepartmentBase!
+  updateDepartment(input: UpdateDepartmentInput!): DepartmentBase!
+  removeDepartment(id: Int!): DepartmentRemove!
+  createEmployee(input: CreateEmployeeInput!): EmployeeBase!
+  updateEmployee(input: UpdateEmployeeInput!): Employee!
+  removeEmployee(id: Int!): Int!
+  uploadEmployeePhoto(file: Upload!, employeeId: Int!): Employee!
+  createPosition(input: CreatePositionInput!): PositionBase!
+  updatePosition(input: UpdatePositionInput!): PositionBase!
+  removePosition(id: Int!): Int!
+}
+
+input CreateDepartmentInput {
+  """Department title"""
+  title: String!
+
+  """Short description of department"""
+  description: String
+}
+
+input UpdateDepartmentInput {
+  """Department title"""
+  title: String
+
+  """Short description of department"""
+  description: String
+
+  """Department ID"""
+  id: Int!
+}
+
+input CreateEmployeeInput {
+  """Employee's first name"""
+  name: String
+
+  """Employee's last name"""
+  surname: String
+
+  """Employee's email"""
+  email: String!
+
+  """Employee's age"""
+  age: Int
+
+  """Employee's position ID"""
+  positionId: Int!
+  photo: Upload
+  photoURI: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UpdateEmployeeInput {
+  """Employee's first name"""
+  name: String
+
+  """Employee's last name"""
+  surname: String
+
+  """Employee's email"""
+  email: String
+
+  """Employee's age"""
+  age: Int
+
+  """Employee's position ID"""
+  positionId: Int
+  photo: Upload
+  photoURI: String
+
+  """Employee's ID"""
+  id: Int!
+}
+
+input CreatePositionInput {
+  """Position title"""
+  title: String
+
+  """Position description"""
+  description: String
+
+  """Department ID"""
+  departmentId: Int!
+}
+
+input UpdatePositionInput {
+  """Position title"""
+  title: String
+
+  """Position description"""
+  description: String
+
+  """Position ID"""
+  id: Int!
+}
